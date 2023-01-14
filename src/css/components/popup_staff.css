@@ -1,0 +1,312 @@
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    /* display: none; */
+}
+
+.overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(204, 204, 204, 0.471);
+}
+
+.popup__staff{
+    position: absolute;
+    width: 1007px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-radius: 4px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.staff__info{
+    display: flex;
+    margin-top: 22px;
+}
+
+.staff__info-label{
+    font-size: 24px;
+    font-weight: 700;
+    color: #212121;
+}
+
+.staff__info-object{
+    display: flex;
+    align-items: center;
+}
+
+.staff__info-object input{
+    font-size: 20px;
+    margin-right: 8px;
+    margin-left: 8px;
+}
+
+.staff__info-text{
+    font-size: 14px;
+    font-weight: 500;
+    color: #1F1F1F;
+}
+
+.wrap{
+    display: flex;
+    width: 100%;
+    padding-top: 22px;
+    box-sizing: border-box;
+    /* justify-content: space-between; */
+}
+
+.staff-id-name{
+    display: flex;
+    width: 50%;
+    margin-right: 8px;
+}
+
+.id-text,.name-text, .date-text{
+    font-size: 14px;
+    font-weight: 500;
+    color: #1F1F1F;
+    margin-bottom: 8px;
+}
+
+.input-text{
+    font-size: 14px;
+    font-weight: 500;
+    color: #1F1F1F;
+    margin-bottom: 8px;
+}
+
+.id-input{
+    height: 36px;
+    width: 150px;
+    border: 1px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin-right: 8px;
+    outline: unset;
+}
+
+.name-input{
+    height: 36px;   
+    width: 326px;
+    border: 1px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius: 4px;
+    outline: unset;
+}
+
+.staff-date-gender{
+    display: flex;
+    width: 50%;
+}
+.staff-gender{
+    margin-left: 26px;
+}
+
+.staff-date .date-text{
+    margin-left: 16px;
+}
+
+.staff-date .room-text{
+    margin-left: 10px;
+}
+
+.staff-date input{
+    padding-left: 10px;
+    width: 126px;
+}
+
+.staff-date input:focus{
+    border-color: green;
+}
+
+.margin-0{
+    margin-left: 16px;
+}
+
+.date-input{
+    height: 36px;   
+    width: 150px;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+    box-sizing: border-box;
+    outline: unset;
+    margin-right: 16px;
+}
+
+.gender-list{
+    height: 36px;
+    display: flex;
+    align-items: center;
+}
+
+.gender-text{
+    font-size: 14px;
+    line-height: 21px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+#gender{
+    outline: unset;
+}
+
+
+
+.input-active{
+    padding: 0 12px;
+}
+
+.input-active:focus{
+    border: 1px solid rgb(11, 115, 11);
+}
+
+.default-input{
+    height: 36px;
+    outline: unset;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: 1px solid #E0E0E0;
+}
+
+.staff-room input{
+    width: 484px;
+}
+
+.staff-name{
+    position: relative;
+}
+
+.name-validate{
+    position: absolute;
+    padding-left: 8px;
+    width: 200px;
+    background-color: #1F1F1F;
+    color: #fff;
+    bottom: -10px;
+    right: 53px;
+    display: none;
+}
+
+.staff-idIdentify-date{
+    display: flex;
+    padding-left: 16px;
+}
+
+.staff-idIdentify input{
+    width: 304px;
+}
+
+.staff-title{
+    padding-right: 16px;
+}
+
+.staff-title input{
+    width: 484px;
+}
+
+.staff-palace input{
+    width: 458px;
+}
+
+.staff-address input{
+    width: 958px;
+}
+
+.staff-telphone input{
+    width: 200px;
+}
+
+.staff-telphone{
+    margin-right: 8px;
+}
+
+.wrap-end{
+    padding-bottom: 32px;
+}
+
+.wrap-btn{
+    justify-content: space-between;
+    padding-top: 0;
+    /* border-top: 1px solid #ccc; */
+    padding-bottom: 32px;
+}
+
+.btn-default{
+    height: 36px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-right: 8px;
+    outline: #50B83C;
+}
+
+.btn-default span{
+    padding: 0 28px;
+    color: #212121;
+}
+
+.btn-green{
+    height: 36px;
+    border-radius: 4px;
+    border: 1px solid #50B83C;
+    background-color: #50B83C;
+    outline: #50B83C;
+    cursor: pointer;
+}
+
+.btn-green span{
+    padding: 0 15px;
+    color: #212121;
+    color: #fff;
+}
+
+.staff-question{
+    position: absolute;
+    top: 10px;
+    right: 44px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.staff-xmark{
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.sprite-smark{
+    background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat  -140px -140px;
+	width: 36px;
+	height: 36px;
+}
+
+.sprite-question{
+    background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -89px -140px;
+	width: 36px;
+	height: 36px;
+    margin-right: 4px;
+}
+
+.text-center{
+    text-align: center;
+    color: #000;
+}
+
+.text-left{
+    text-align: left;
+    color: #000;
+}

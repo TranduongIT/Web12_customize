@@ -1,0 +1,25 @@
+.table__dropdown{
+    position: absolute;
+    z-index: 100;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    right: 22px;
+    top: 84px;
+    /* display: none; */
+}
+
+.table__dropdown-item{
+    display: flex;
+    align-items: center;
+    height: 44px;
+    color: #212121;
+    width: 150px;
+    cursor: pointer;
+    padding-left: 20px;
+}
+
+.table__dropdown-item:hover{
+    background-color: #F5F5F5;
+    color: green;
+    font-weight: 700;
+}

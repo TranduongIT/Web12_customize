@@ -1,0 +1,114 @@
+.staff-telphone {
+  margin-right: 8px;
+}
+
+.input-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f1f1f;
+  margin-bottom: 8px;
+}
+
+.input-active {
+  padding: 0 12px;
+}
+
+.input-active:focus {
+  border: 1px solid rgb(11, 115, 11);
+}
+
+.input-date {
+  margin-left: 12px;
+  height: 36px;
+}
+
+.default-input {
+  height: 36px;
+  outline: unset;
+  border-radius: 4px;
+  box-sizing: border-box;
+  border: 1px solid #e0e0e0;
+}
+
+.ms-con-input-label {
+  position: relative;
+  width: 100%;
+}
+
+.ms-input {
+  color: #111;
+  width: 100%;
+}
+
+.ms-con-input-label .ms-con-input {
+  display: flex;
+  box-sizing: border-box;
+  align-items: flex-start;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+}
+
+.ms-con-input-label .ms-con-input :focus{
+    border: 1px solid #50b83c;
+    outline: unset;
+}
+
+.ms-input-normal {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+}
+
+.ms-input .ms-input--input {
+  font-family: notosans;
+  font-size: 13px;
+  height: 32px;
+  width: 220px;
+  color: inherit;
+  position: relative;
+  padding: 0 10px;
+  border-radius: 4px;
+  border: 1px solid #babec5;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.ms-input .ms-input--input::placeholder {
+  font-weight: 400;
+  line-height: 11px;
+  color: #9e9e9e;
+  font-family: Roboto Italic;
+}
+
+.ms-input .ms-input--input:hover {
+  background-color: #e6e6e6;
+}
+
+.ms-input .ms-input--input:focus {
+  border: 1px solid #50b83c;
+}
+
+.ms-input .ms-input--icon {
+  cursor: pointer;
+  position: absolute;
+  left: 5px;
+  font-size: 1.1rem;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  padding-right: 3px;
+  color: rgba(0, 0, 0, 0.4);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  top: 6px;
+}
+
+.ms-input .ms-input--icon.icon-after {
+  left: auto;
+  right: 12px;
+  border-right: 0;
+}
+
+.ms-input .ms-input--icon.icon-no-border {
+  border: 0;
+}

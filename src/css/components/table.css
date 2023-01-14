@@ -1,0 +1,50 @@
+table{
+    position: relative;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table tr:hover{
+    background-color: #E0E0E0;
+}
+
+table tr{
+    z-index: 10;
+}
+
+th ,tr, td{
+    border: .5px solid #E0E0E0;
+    text-align: left;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.table-list-th{
+    position: sticky;
+    top: -1px;
+    background-color: #edeef2;
+}
+
+.text-center{
+    position: relative;
+    text-align: center;
+    color: blue;
+    cursor: pointer;
+}
+
+tr{
+    height: 48px;
+}
+
+.table__caret-down{
+    color: #0f70aa;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.table__caret-down:hover{
+    border: 1px solid #0f70aa;
+}
