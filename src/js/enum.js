@@ -1,3 +1,7 @@
+/**
+* Hàm định dạng kiểu dữ liệu ngày tháng
+* Created By: TNDuong(2/1/2022)
+*/
 const MEnum = {
     KEY_CODE:{
         ENTER:13,

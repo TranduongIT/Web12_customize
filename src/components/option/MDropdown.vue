@@ -18,6 +18,7 @@ export default {
      * Created By: TNDuong(9/1/2023)
      */
     deleteEmployeeID(id) {
+      alert("1")
       this.employee = () => {
         fetch(`https://cukcuk.manhnv.net/api/v1/Employees/${id}`, {
           method: "DELETE",

@@ -1,21 +1,21 @@
 <template>
-  <!-- <MPopup v-if="showPopup" @onCloseDropdown="showPopup=false"></MPopup> -->
-  <!-- <MLoading v-if="isLoadingDataForm"></MLoading> -->
   <div id="modal" class="modal">
-    <div class="overlay"></div>
     <div class="popup__staff">
       <div class="staff-question sprite-question"></div>
-      <div @click="btnCloseOnClick()" class="sprite-smark staff-xmark"></div>
+      <div
+        @click="checkChangeAndHideDialog"
+        class="sprite-smark staff-xmark"
+      ></div>
 
       <div class="staff__info">
-        <div class="staff__info-label">Thông tin nhân viên</div>
+        <div class="staff__info-label">{{ titleForm }}</div>
         <div class="staff__info-object">
           <input type="checkbox" />
           <div class="staff__info-text">Là nhân viên</div>
         </div>
         <div class="staff__info-object">
           <input type="checkbox" />
-          <div class="staff__info-text">Là nhà cung cấp</div>
+          <div clatxtNamess="staff__info-text">Là nhà cung cấp</div>
         </div>
       </div>
       <div class="wrap">
@@ -26,18 +26,21 @@
               v-model="employee.EmployeeCode"
               type="text"
               class="id-input input-active"
-              ref="txtCode"
+              :class="{ errorBoder: errors.codeError }"
+              @blur="validate"
             />
+            <div class="errormsg">{{ errors.codeError }}</div>
           </div>
           <div class="staff-name">
             <div class="name-text">Tên</div>
             <input
               v-model="employee.FullName"
-              ref="txtName"
               type="text"
               class="name-input input-active"
+              :class="{ errorBoder: errors.nameError }"
+              @blur="validate"
             />
-            <span class="name-validate">Tên không được để trống.</span>
+            <div style="right: 0" class="errormsg">{{ errors.nameError }}</div>
           </div>
         </div>
         <div class="staff-date-gender">
@@ -48,18 +51,28 @@
           <div class="staff-gender">
             <div class="date-text">Giới tính</div>
             <div class="gender-list">
-              <input checked type="radio" name="gender" id="gender" /><span
-                class="gender-text"
-                >Nam</span
-              >
-              <input type="radio" name="gender" id="gender" /><span
-                class="gender-text"
-                >Nữ</span
-              >
-              <input type="radio" name="gender" id="gender" /><span
-                class="gender-text"
-                >Khác</span
-              >
+              <input
+                v-model="employee.Gender"
+                checked
+                type="radio"
+                name="gender"
+                id="gender"
+                value="0"
+              /><span class="gender-text">Nam</span>
+              <input
+                v-model="employee.Gender"
+                type="radio"
+                name="gender"
+                value="1"
+                id="gender"
+              /><span class="gender-text">Nữ</span>
+              <input
+                v-model="employee.Gender"
+                type="radio"
+                value="2"
+                name="gender"
+                id="gender"
+              /><span class="gender-text">Khác</span>
             </div>
           </div>
         </div>
@@ -78,7 +91,11 @@
             propName="DepartmentName"
             propValue="DepartmentId"
             v-model="employee.DepartmentId"
+            class="cbxDepartment"
+            :class="{ errorBoder: errors.departmentError }"
+            @blur="validate"
           ></MCombobox>
+          <div class="errormsg">{{ errors.departmentError }}</div>
         </div>
         <div class="staff-idIdentify-date">
           <div class="staff-idIdentify">
@@ -91,7 +108,10 @@
           </div>
           <div class="staff-date">
             <div class="room-text input-text">Ngày cấp</div>
-            <MInputDate type="date" v-model="employee.DateOfBirth"></MInputDate>
+            <MInputDate
+              type="date"
+              v-model="employee.IdentityDate"
+            ></MInputDate>
           </div>
         </div>
       </div>
@@ -117,7 +137,7 @@
         <div class="staff-address">
           <div class="input-text">Địa chỉ</div>
           <input
-            v-model="employee.IdentityPlace"
+            v-model="employee.Address"
             type="text"
             class="input-active default-input"
           />
@@ -170,15 +190,13 @@ import MInput from "../../components/input/MInput.vue";
 import MCombobox from "@/components/combobox/MCombobox.vue";
 import MInputDate from "@/components/input/MInputDate.vue";
 import $ from "jquery";
+// import commonJS from "@/js/common";
 // import MEnum from "../../js/enum.js";
 import MResource from "@/js/resource";
-// eslint-disable-next-line
-import MLoading from "@/components/loading/MLoading.vue";
 import axios from "axios";
-// import MPopup from '@/components/popup/MPopup.vue';
 export default {
   name: "EmployeeDetail",
-  props: ["employeeUpdate", "id"],
+  props: ["employeeUpdate", "id", "acceptSave"],
   components: { MInput, MCombobox, MInputDate },
   created() {
     /**
@@ -186,20 +204,19 @@ export default {
      * Created By: TNDuong(2/1/2023)
      */
     var me = this;
+    // console.log(me);
     this.employee = this.employeeUpdate;
-    me.employee.DateOfBirth = me.formatDate(me.employeeUpdate.DateOfBirth);
-    console.log(me.employee.DateOfBirth);
     if (this.id) {
       fetch(`https://cukcuk.manhnv.net/api/v1/employees/${this.id}`)
         .then((res) => res.json)
         .then((emp) => {
-          me.employee = emp;
-          me.employee.DateOfBirth = me.formatDate(
-            me.employeeUpdate.DateOfBirth
-          );
-          me.getNewEmployeeCode();
-          // this.isLoadingDataForm = false;
+          me.employee = emp.data;
+          me.employee.DateOfBirth = me.formatDate(emp.data.DateOfBirth);
+          me.employee.IdentityDate = me.formatDate(emp.data.IdentityDate);
         });
+    } else {
+      // this.getNewEmployeeCode();
+      // this.employee.Gender = 0;
     }
   },
   methods: {
@@ -215,6 +232,8 @@ export default {
           let date = dateTime.getDate();
           let month = dateTime.getMonth() + 1;
           let year = dateTime.getFullYear();
+          date = date < 10 ? `0${date}` : date;
+          month = month < 10 ? `0${month}` : month;
           return `${year}-${month}-${date}`;
         } else {
           return "";
@@ -223,52 +242,6 @@ export default {
         return "";
       }
     },
-    /**
-     * Validate form
-     * Created By: TNDuong(11/01/2023)
-     */
-    // validate() {
-    //   // Bỏ trống mã nhân viên
-    //   if (!this.employee.EmployeeCode) {
-    //     this.errors.code = "Mã nhân viên không được bỏ trống";
-    //     this.$refs.txtCode.classList.add("error");
-    //     this.$emit("sendMessage", this.errors.code);
-    //     return false;
-    //   } else {
-    //     this.$refs.txtCode.classList.remove("error");
-    //   }
-    //   // Bỏ trống tên nhân viên
-    //   if (!this.employee.FullName) {
-    //     this.errors.name = "Tên nhân viên không được bỏ trống";
-    //     this.$refs.txtName.classList.add("error");
-    //     this.$emit("sendMessage", this.errors.name);
-    //     return false;
-    //   } // Độ dài tên quá 255 kí tự
-    //   else if (this.employee.FullName.length > 255) {
-    //     this.errors.name = "Tên nhân viên dưới 255 kí tự";
-    //     this.$refs.txtName.classList.add("error");
-    //     this.$emit("sendMessage", this.errors.name);
-    //     return false;
-    //   } else {
-    //     this.$refs.txtName.classList.remove("error");
-    //   }
-    //   // Dưới 18 tuổi
-    //   if (this.employee.DateOfBirth) {
-    //     var year = new Date(this.employee.DateOfBirth);
-    //     var dob = year.getFullYear();
-    //     var current = new Date();
-    //     if (current.getFullYear() - dob < 18) {
-    //       this.errors.dob = "Tuổi nhân viên phải trên 18";
-    //       this.$refs.dob.classList.add("error");
-    //       this.$emit("sendMessage", this.errors.dob);
-    //       return false;
-    //     } else {
-    //       this.$refs.dob.classList.remove("error");
-    //     }
-    //   }
-
-    //   return true;
-    // },
     /**
      * Đóng form thông tin nhân viên
      * Created By: TNDuong(2/1/2023)
@@ -285,6 +258,13 @@ export default {
       }
     },
     /**
+     * dữ liệu thay đổi, xác nhận có muốn cất dữ liệu hay không
+     * Created By: TNDuong(2/1/2023)
+     */
+    checkChangeAndHideDialog() {
+      this.$emit("confirmClose");
+    },
+    /**
      * Lấy mã nhân viên mới
      * Created By: TNDuong(2/1/2023)
      */
@@ -294,7 +274,6 @@ export default {
         .get("https://cukcuk.manhnv.net/api/v1/Employees/NewEmployeeCode")
         .then(function (res) {
           me.employee.EmployeeCode = res.data;
-          // me.$refs.txtCode.focus();
         });
     },
     /**
@@ -302,30 +281,46 @@ export default {
      * Created By: TNDuong(2/1/2023)
      */
     async saveData() {
-      try {
-        var newData = this.employee;
-        console.log("new data:", newData);
+      var me = this;
+      var newData = this.employee;
+      // console.log("new data:", newData);
+      var res;
+      if (!this.employee.EmployeeId) {
+        res = await axios.post(
+          "https://cukcuk.manhnv.net/api/v1/Employees",
+          newData
+        );
+        me.$emit("showToast", MResource.vi.add);
+      } else {
         // eslint-disable-next-line
-        var res;
-        if (!this.employee.EmployeeId) {
-          res = await axios.post(
-            "https://cukcuk.manhnv.net/api/v1/Employees",
-            // {Gender: 0, DepartmentName: 'Phòng Công Nghệ Thông Tin', DepartmentId: '3f8e6896-4c7d-15f5-a018-75d8bd200d7c', EmployeeCode: 'NV-8217', FullName: newData.FullName}
-            newData
-          );
-          console.log("res: ", res.data);
-          //return res
-        } else {
-          // eslint-disable-next-line
-          res = await axios.put(
-            `https://cukcuk.manhnv.net/api/v1/Employees/${this.employee.EmployeeId}`,
-            newData
-          );
-          console.log(res.data);
-        }
-      } catch (error) {
-        console.log("error api: ", error);
+        res = await axios.put(
+          `https://cukcuk.manhnv.net/api/v1/Employees/${this.employee.EmployeeId}`,
+          newData
+        );
+        // console.log(res.data);
+        me.$emit("showToast", MResource.vi.update);
       }
+    },
+
+    /**
+     * Validate form
+     * Created By: TNDuong(11/01/2023)
+     */
+    validate() {
+      this.errors = {
+        codeError: "",
+        nameError: "",
+        departmentError: "",
+      };
+      if (!this.employee.EmployeeCode) {
+        this.errors.codeError = MResource.errors.codeError;
+      } else return this.employee.EmployeeCode;
+      if (!this.employee.FullName) {
+        this.errors.nameError = MResource.errors.nameError;
+      } else return this.employee.FullName;
+      if (!this.employee.DepartmentId) {
+        this.errors.departmentError = MResource.errors.departmentError;
+      } else return this.employee.DepartmentId;
     },
     /**
      * Lưu và đóng form
@@ -333,40 +328,28 @@ export default {
      */
     async saveEmployee() {
       try {
-        $("loading").show();
-        await this.saveData();
-        this.btnCloseOnClick();
-        $("loading").hide();
-        return;
+        if (this.validate()) {
+          $("#loading").show();
+          await this.saveData();
+          this.btnCloseOnClick();
+          $("#loading").hide();
+        }
       } catch (error) {
         console.log(error);
       }
     },
+
     /**
-     * Cất dữ liệu và thêm 1 form thêm chi tiết nhân viên mới
+     * Cất dữ lemployeeIdSelectediệu và thêm 1 form thêm chi tiết nhân viên mới
+     * Created By: TNDuong(2/1/2023)
      */
     saveAndAdd() {
-      $("loading").show();
-      this.saveData();
-      this.employee = {};
-      this.getNewEmployeeCode();
-      this.btnCloseOnClick();
-      $("loading").hide();
-    },
-    /**
-     * hiện thông báo xác nhận xóa
-     * Created By: TNDuong(2/1/2023)
-     */
-    deleteEmployee() {
-      this.message = MResource.vi.delete;
-      this.confirmDelete = true;
-    },
-    /**
-     * Đóng thông xác nhận xóa
-     * Created By: TNDuong(2/1/2023)
-     */
-    cancelDelete(e) {
-      this.confirmDelete = e;
+      if (this.validate()) {
+        this.saveData();
+        this.employee = {};
+        this.getNewEmployeeCode();
+        // window.location.reload();
+      }
     },
   },
   computed: {
@@ -378,25 +361,40 @@ export default {
         return true;
       }
     },
+    /**
+     * Đổi Tiêu đề form theo form mode
+     * Author: TNDuong (7/1/2023)
+     */
+    titleForm() {
+      return this.id === null
+        ? "Thêm nhân viên"
+        : "Thông tin nhân viên";
+    },
+  },
+  watch: {
+    acceptSave: function () {
+      this.saveEmployee();
+    },
   },
   data() {
     return {
+      //Khởi tạo đối tượng employee
       employee: {
-        FullName: "Trần Trí Tùng",
-        // showPopup: false,
+        FullName: "",
         EmployeeId: "",
         EmployeeCode: "",
         employeeDefault: null,
         DateOfBirth: null,
         confirmDelete: false,
-        // isLoadingDataForm: false,
         DepartmentId: "45ac3d26-18f2-18a9-3031-644313fbb055",
-        errors: {
-          code: "",
-          name: "",
-          phone: "",
-          dob: "",
-        },
+        IdentityDate: "07-07-2001",
+        PositionName: "Nhân Viên",
+      },
+      // Khởi tạo các thông báo validate
+      errors: {
+        codeError: "",
+        nameError: "",
+        departmentError: "",
       },
     };
   },

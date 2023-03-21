@@ -34,7 +34,7 @@ import MEnum from "../../js/enum";
 export default {
   name: "MCombobox",
   computed: {},
-  props: ["id", "api", "propName", "propValue", "modelValue"],
+  props: ["id", "api", "propName", "propValue", "modelValue","errors"],
   emits: ["update:modelValue"],
   methods: {
     /**
@@ -140,6 +140,7 @@ export default {
     };
   },
 };
+
 </script>
 
 <style scoped>

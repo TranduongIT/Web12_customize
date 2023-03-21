@@ -27,7 +27,7 @@
         methods:{
             /**
              * Đóng message
-             * Author: NHNam (7/1/2023)
+             * Created By: TNDuong(07/01/2023)
              */
             close(){
                 this.$emit('close');

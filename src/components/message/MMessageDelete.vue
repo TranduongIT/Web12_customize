@@ -9,8 +9,8 @@
             <div class="messagebox-content-describe">Bạn có chắc chắn muốn xóa nhân viên <b>{{ employeeSelected.EmployeeCode }}</b></div>
         </div>
         <div class="messagebox-footer">
-            <button class="button-white" @click="closeMessage">Hủy</button>
-            <button class="button" @click="deleteEmployee">Đồng ý</button>
+            <button class="btn-white" @click="closeMessage">Hủy</button>
+            <button class="btn" style="min-width:80px;" @click="deleteEmployee">Đồng ý</button>
         </div>
     </div>
     </div>

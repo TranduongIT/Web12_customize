@@ -129,3 +129,17 @@
     left: 50%;
     transform: translate(-50%, 0);
 }
+
+.btn-white{
+    height: 36px;
+    border-radius: 3px;
+    border: 1px solid #E0E0E0;
+    cursor: pointer;
+    margin-right: 8px;
+    outline: #50B83C;
+    min-width: 80px;
+}
+
+.btn-white:hover{
+    background-color: #ccc;
+}

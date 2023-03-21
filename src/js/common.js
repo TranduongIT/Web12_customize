@@ -19,7 +19,19 @@ const commonJS = {
         } catch (error) {
             return "";
         }
-    }
+    },
+        /**
+     * Lấy mã nhân viên mới
+     * Created By: TNDuong(2/1/2023)
+     */
+        getNewEmployeeCode() {
+            var me = this;
+            axios
+              .get("https://cukcuk.manhnv.net/api/v1/Employees/NewEmployeeCode")
+              .then(function (res) {
+                me.employee.EmployeeCode = res.data;
+              });
+          },
 }
-
+import axios from "axios";
 export default commonJS;

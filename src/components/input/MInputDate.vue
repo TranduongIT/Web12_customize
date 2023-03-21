@@ -34,7 +34,7 @@
     watch: {
       inputData: function (newValue) {
         this.$emit("change", newValue);
-        console.log("Input value: ", newValue);
+        // console.log("Input value: ", newValue);
       },
     },
   };
